@@ -9,6 +9,8 @@
 
 #if defined(__GLIBCXX__)
 #include "demangle_cxxabi.hh"
+#elif defined(__ANDROID__)
+#include "demangle_nop.hh"
 #elif defined(__has_include)
 #if __has_include(<cxxabi.h>)
 #include "demangle_cxxabi.hh"
