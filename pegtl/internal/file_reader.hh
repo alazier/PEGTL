@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <memory>
+#include <errno.h>
 
 #include "../input_error.hh"
 

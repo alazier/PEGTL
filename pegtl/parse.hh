@@ -16,6 +16,17 @@
 
 namespace pegtl
 {
+
+#if defined(__ANDROID__)
+    std::string to_string(int value) {
+        std::ostringstream oss;
+        oss << value;
+        return oss.str();
+    }
+#else
+    std::string (*to_string)(int) = std::to_string;
+#endif
+
    template< typename Rule, template< typename ... > class Action = nothing, template< typename ... > class Control = normal, typename Input, typename ... States >
    bool parse_input( Input & in, States && ... st )
    {
@@ -25,7 +36,7 @@ namespace pegtl
    template< typename Rule, template< typename ... > class Action = nothing, template< typename ... > class Control = normal, typename ... States >
    bool parse( const int argc, char ** argv, States && ... st )
    {
-      const std::string source = "argv[" + std::to_string( argc ) + ']';
+      const std::string source = "argv[" + to_string( argc ) + ']';
       input in( 1, 0, argv[ argc ], argv[ argc ] + ::strlen( argv[ argc ] ), source.c_str() );
       return parse_input< Rule, Action, Control >( in, st ... );
    }
